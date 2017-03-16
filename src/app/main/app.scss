@@ -1,0 +1,32 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	font-family: 'Gill Sans', Helvetica, Arial, sans-serif;
+	font-size: 100%;
+	color: color(black);
+	background-color: color(super-light-gray);
+}
+
+
+a {
+	color: color(link-color);
+	text-decoration: none;
+}
+
+h1,h2,h3,h4 {
+	font-weight: 100;
+	margin: 0;
+	padding: 0;
+}
+
+.content-container {
+}
