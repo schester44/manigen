@@ -2,16 +2,52 @@ import './generator.scss';
 
 class GeneratorController {
   constructor ($scope) {
+
+    this.colorPickerOptions = {
+        placeholder: 'Value',
+        restrictToFormat: true,
+        format: 'rgb',
+        close: {
+            show: true
+        },
+        reset: {
+            show: true
+        }
+    };
+
     this.model = {
       manifest_version: 1,
       template_version: 1,
-      private: 'false',
-      orientation: 'horizontal',
+      private: false,
       meta: {
         name: '',
         description: ''
       },
-      theme: {},
+      theme: {
+        orientation: 'horizontal',
+        colors: {
+            bgColor: {
+                name: "Background Overlay",
+                value: ""
+            },
+            color1: {
+                name: "",
+                value: ""
+            },
+            color2: {
+                name: "",
+                value: ""
+            },
+            color3: {
+                name: "",
+                value: ""
+            },
+            color4: {
+                name: "",
+                value: ""
+            }
+        }
+      },
       compatibility: {
         services: []
       }
@@ -68,21 +104,29 @@ export const generator = {
                                 </label>
                             </div>      
 
+                            <div class="form-control">
+                                <label>Private Template</label>
+                                <label class="checklist-item">
+                                     <input type="checkbox" value="true" ng-model="$ctrl.model.private"/>
+                                     <i></i>
+                                </label>
+                            </div>
+
                             <div class="form-control checkboxes">
                                 <label>
-                                    Private Template
+                                    Orientation
                                     <ul>
                                         <li>
-                                            <input type="radio" id="false" name="private" value="false" ng-model="$ctrl.model.private" checked>
-                                            <label for="false">False</label>
+                                            <input type="radio" id="horizontal" name="orientation" value="horizontal" ng-model="$ctrl.model.theme.orientation" checked>
+                                            <label for="horizontal">Horizontal</label>
                                         </li>
                                          <li>
-                                            <input type="radio" id="true" name="private" value="true" ng-model="$ctrl.model.private">
-                                            <label for="true">True</label>
+                                            <input type="radio" id="vertical" name="orientation" value="vertical" ng-model="$ctrl.model.theme.orientation">
+                                            <label for="vertical">Vertical</label>
                                         </li>
                                     </ul>
                                 </label>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                     <div class="column">
@@ -95,6 +139,7 @@ export const generator = {
                             </pre>
                             </div>
                             <button
+                            class="copy"
                             clipboard
                             text="$ctrl.copyText"
                             on-copied="$ctrl.success()"
@@ -108,55 +153,44 @@ export const generator = {
                 <div class="row">
                     <div class="column">
                         <div class="input-block">
-                            <h5 class="section-heading">Template Theme</h5>           
-                            <div class="form-control checkboxes">
-                                <label>
-                                    Orientation
-                                    <ul>
-                                        <li>
-                                            <input type="radio" id="horizontal" name="orientation" value="horizontal" ng-model="$ctrl.model.orientation" checked>
-                                            <label for="horizontal">Horizontal</label>
-                                        </li>
-                                         <li>
-                                            <input type="radio" id="vertical" name="orientation" value="vertical" ng-model="$ctrl.model.orientation">
-                                            <label for="vertical">Vertical</label>
-                                        </li>
-                                    </ul>
-                                </label>
-                            </div>
-                            
+                            <h5 class="section-heading">Template Theme</h5>
                             <div class="form-control">
                                 <label>
                                     Background Overlay Color
-                                    <input type="text" name="theme.bgColor" ng-model="$ctrl.model.theme.bgColor" placeholder="rgba(0,0,0,0.2)">
+                                    <input type="text" name="theme.colors.bgColor" ng-model="$ctrl.model.theme.colors.bgColor.name" placeholder="rgba(0,0,0,0.2)">
+                                    <color-picker options="$ctrl.colorPickerOptions" ng-model="$ctrl.model.theme.colors.bgColor.value"></color-picker>
                                 </label>
                             </div>
 
                             <div class="form-control">
                                 <label>
                                     Color 1
-                                    <input type="text" name="theme.color1" ng-model="$ctrl.model.theme.color1" placeholder="rgba(255,0,0,1)">
+                                    <input type="text" name="theme.colors.color1.name" ng-model="$ctrl.model.theme.colors.color1.name" placeholder="Name">
+                                    <color-picker options="$ctrl.colorPickerOptions" ng-model="$ctrl.model.theme.colors.color1.value"></color-picker>
                                 </label>
                             </div>
                             
                             <div class="form-control">
                                 <label>
                                     Color 2
-                                    <input type="text" name="theme.color2" ng-model="$ctrl.model.theme.color2" placeholder="rgba(0,0,0,1)">
+                                    <input type="text" name="theme.colors.color2.name" ng-model="$ctrl.model.theme.colors.color2.name" placeholder="Name">
+                                    <color-picker options="$ctrl.colorPickerOptions" ng-model="$ctrl.model.theme.colors.color2.value"></color-picker>
                                 </label>
                             </div>      
 
                             <div class="form-control">
                                 <label>
                                     Color 3
-                                    <input type="text" name="theme.color3" ng-model="$ctrl.model.theme.color3" placeholder="rgba(0,0,0,1)">
+                                    <input type="text" name="theme.colors.color3.name" ng-model="$ctrl.model.theme.colors.color3.name" placeholder="Name">
+                                    <color-picker options="$ctrl.colorPickerOptions" ng-model="$ctrl.model.theme.colors.color3.value"></color-picker>
                                 </label>
                             </div>
 
                             <div class="form-control">
                                 <label>
                                     Color 4
-                                    <input type="text" name="theme.color4" ng-model="$ctrl.model.theme.color4" placeholder="rgba(0,0,0,1)">
+                                    <input type="text" name="theme.colors.color4.name" ng-model="$ctrl.model.theme.colors.color4.name" placeholder="Name">
+                                    <color-picker options="$ctrl.colorPickerOptions" ng-model="$ctrl.model.theme.colors.color4.value"></color-picker>
                                 </label>
                                 </div>
                         </div>
@@ -171,29 +205,22 @@ export const generator = {
                             <h6 class="section-subheading">Services</h6>
                             <div class="form-control">
                                 <label class="checklist-item">
-                                    Exchange Web Services
-                                     <input type="checkbox" value="3" checklist-value="2" checklist-model="$ctrl.model.compatbility.services"/>
+                                    Exchange/Outlook
+                                     <input type="checkbox" value="ews" checklist-model="$ctrl.model.compatbility.services"/>
                                      <i></i>
                                 </label>
                             </div>
                             <div class="form-control">
                                 <label class="checklist-item">
                                     iCalendar
-                                     <input type="checkbox" value="2" checklist-value="3" checklist-model="$ctrl.model.compatbility.services"/>
+                                     <input type="checkbox" value="icalendar" checklist-model="$ctrl.model.compatbility.services"/>
                                      <i></i>
                                 </label>
                             </div>
                             <div class="form-control">
                                 <label class="checklist-item">
                                     Excel
-                                     <input type="checkbox" value="4" checklist-value="4" checklist-model="$ctrl.model.compatbility.services"/>
-                                     <i></i>
-                                </label>
-                            </div>
-                            <div class="form-control">
-                                <label class="checklist-item">
-                                    Blackbaud
-                                     <input type="checkbox" value="1" checklist-value="1" checklist-model="$ctrl.model.compatbility.services"/>
+                                     <input type="checkbox" value="excel" checklist-model="$ctrl.model.compatbility.services"/>
                                      <i></i>
                                 </label>
                             </div>

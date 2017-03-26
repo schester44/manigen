@@ -11,6 +11,7 @@ import '../global/directives/sticky.directive';
 import 'checklist-model/checklist-model';
 import 'angular-clipboard/angular-clipboard';
 
+
 const importModules = [
   uiRouter,
   ngAnimate,
